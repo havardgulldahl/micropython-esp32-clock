@@ -1,3 +1,4 @@
 WIFI_SSID=""
 WIFI_PASSWORD=""
 
+TIME_UTC_DIFF=2 # int, timezone

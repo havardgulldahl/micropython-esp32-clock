@@ -8,10 +8,9 @@ import screen, networking, clock
 
 
 def write_time(led):
-    rtc = machine.RTC()
-    # Return the current time as tuple: (year, month, day, hour, minute, second)
-    timestamp = rtc.now()
-    screen.write_text(led, "{}:{}:{}".format(timestamp[3], timestamp[4], timestamp[5]))
+    timestamp, time_explained = clock.now_human_repr()
+    # screen.write_text(led, "{}:{}:{}".format(timestamp[3], timestamp[4], timestamp[5]))
+    screen.write_text(led, time_explained)
 
 
 led = screen.setup()
