@@ -1,5 +1,4 @@
-# This is your main script.
-
+"Main script"
 
 print("Hello, world!")
 
@@ -9,13 +8,18 @@ import screen, networking, clock
 
 def write_time(led):
     timestamp, time_explained = clock.now_human_repr()
-    # screen.write_text(led, "{}:{}:{}".format(timestamp[3], timestamp[4], timestamp[5]))
-    screen.write_text(led, time_explained)
+    screen.write_line_two(led, "{:02d}:{:02d}".format(timestamp[0], timestamp[1]))
+    screen.write_line_three(led, time_explained)
 
 
 led = screen.setup()
-text = "Klokka til ODA"
-screen.write_text(led, text)
+# TESTTEXT = b"D\xf8de bl\xe5b\xe6r"
+# b'\xf8\xD8\xe6\xC6\xe5\xc5' = "øØæÆåÅ"
+# screen.write_line_four(led, TESTTEXT)
 
+
+# start our clock
 tick = machine.Timer(0)
-tick.init(period=1000, mode=tick.PERIODIC, callback=lambda x: write_time(led))
+tick.init(period=1000 * 60, mode=tick.PERIODIC, callback=lambda x: write_time(led))
+
+# start

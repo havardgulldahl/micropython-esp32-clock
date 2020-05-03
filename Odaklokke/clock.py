@@ -5,33 +5,36 @@ import machine, utime, network  # pylint: disable=import-error
 from config import TIME_UTC_DIFF
 
 HOURS = [
-    "midnatt",
-    "ett",
-    "to",
-    "tre",
-    "fire",
-    "fem",
-    "seks",
-    "sju",
-    "åtte",
-    "ni",
-    "ti",
-    "elleve",
-    "tolv",
+    b"midnatt",
+    b"ett",
+    b"to",
+    b"tre",
+    b"fire",
+    b"fem",
+    b"seks",
+    b"sju",
+    b"\xe5tte",
+    b"ni",
+    b"ti",
+    b"elleve",
+    b"tolv",
 ]
 
+# b'\xf8\xD8\xe6\xC6\xe5\xc5' = "øØæÆåÅ"
 MNEMONICS = {
-    5: "fem over",
-    10: "ti over",
-    15: "kvart over",
-    20: "ti på halv",
-    25: "fem på halv",
-    30: "halv",
-    35: "fem over halv",
-    40: "ti over halv",
-    45: "kvart på",
-    50: "ti på",
-    55: "fem på",
+    0: b"",
+    5: b"fem over ",
+    10: b"ti over ",
+    15: b"kvart over ",
+    20: b"ti p\xe5 halv ",
+    25: b"fem p\xe5 halv ",
+    30: b"halv ",
+    35: b"fem over halv ",
+    40: b"ti over halv ",
+    45: b"kvart p\xe5 ",
+    50: b"ti p\xe5 ",
+    55: b"fem p\xe5 ",
+    60: b"",
 }
 
 
@@ -58,8 +61,6 @@ def now_human_repr() -> tuple:
     current_hour = timestamp[0] % 12
     return (
         timestamp,
-        "{} {}".format(
-            MNEMONICS[nearest_five],
-            HOURS[current_hour if nearest_five < 20 else current_hour + 1],
-        ),
+        MNEMONICS[nearest_five]
+        + HOURS[current_hour if nearest_five < 20 else current_hour + 1],
     )
