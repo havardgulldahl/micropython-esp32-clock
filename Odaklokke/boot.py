@@ -7,7 +7,7 @@ import network, utime  # pylint: disable=import-error
 
 from networking import wifi_up, telnet_up, mdns_up
 from clock import ntp_sync
-from config import WIFI_PASSWORD, WIFI_SSID
+from config import WIFI_PASSWORD, WIFI_SSID, UNIT_DESCRIPTION, UNIT_NAME
 
 print("boot.py")
 
@@ -15,5 +15,5 @@ wifi_up(WIFI_SSID, WIFI_PASSWORD)
 
 ntp_sync()
 
-telnet_up()
-mdns_up()
+# telnet_up()
+mdns_up(UNIT_NAME, UNIT_DESCRIPTION)

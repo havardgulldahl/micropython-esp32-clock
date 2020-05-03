@@ -1,4 +1,9 @@
 WIFI_SSID=""
 WIFI_PASSWORD=""
 
-TIME_UTC_DIFF=2 # int, timezone
+# https://github.com/loboris/MicroPython_ESP32_psRAM_LoBo/blob/master/MicroPython_BUILD/components/micropython/docs/zones.csv
+TIMEZONE = "CET-1CEST"
+NTP_SERVER = "no.pool.ntp.org"
+
+UNIT_NAME="odaklokke"
+UNIT_DESCRIPTION="What time is it"

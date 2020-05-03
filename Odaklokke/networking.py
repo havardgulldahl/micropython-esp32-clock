@@ -18,35 +18,38 @@ def telnet_up(username=None, password=None):
 
 
 def ftp_up(username=None, password=None):
-    pass
+    return network.ftp.start(user=username or "m", password=password or "m")
 
 
-def mdns_up():
+def mdns_up(unit_name, unit_description, bc_telnet=False, bc_ftp=False):
     sta_if = network.WLAN(network.STA_IF)
     if not sta_if.isconnected():
         raise Exception("Network not availabel")
     else:
         try:
             mdns = network.mDNS()
-            mdns.start("Odaklokke", "Lille klokke på veggen der")
-            _ = mdns.addService(
-                "_ftp",
-                "_tcp",
-                21,
-                "MicroPython",
-                {
-                    "board": "ESP32",
-                    "service": "mPy FTP File transfer",
-                    "passive": "True",
-                },
-            )
-            _ = mdns.addService(
-                "_telnet",
-                "_tcp",
-                23,
-                "MicroPython",
-                {"board": "ESP32", "service": "mPy Telnet REPL"},
-            )
+            mdns.start(unit_name, unit_description)
+
+            if bc_telnet:  # broadcast telnet
+                _ = mdns.addService(
+                    "_ftp",
+                    "_tcp",
+                    21,
+                    "MicroPython",
+                    {
+                        "board": "ESP32",
+                        "service": "mPy FTP File transfer",
+                        "passive": "True",
+                    },
+                )
+            if bc_ftp:
+                _ = mdns.addService(
+                    "_telnet",
+                    "_tcp",
+                    23,
+                    "MicroPython",
+                    {"board": "ESP32", "service": "mPy Telnet REPL"},
+                )
             # _ = mdns.addService('_http', '_tcp', 80, "MicroPython", {"board": "ESP32", "service": "mPy Web server"})
             print("mDNS started")
         except:
