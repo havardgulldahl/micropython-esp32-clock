@@ -1,7 +1,5 @@
 import display  # pylint: disable=import-error
 
-_lasttext = None
-
 RAINBOW_HEIGHT = 13  # in pixels
 
 
@@ -31,42 +29,12 @@ def setup():
     return tft
 
 
-def write_text(tft, text):
-    global _lasttext
-    if _lasttext is not None:
-        _x, _y, _text = _lasttext
-        tft.textClear(_x, _y, _text)
-    x = 120 - int(tft.textWidth(text) / 2)
-    y = 67 - int(tft.fontSize()[1] / 2)
-    tft.text(
-        x, y, text, 0xFFFFFF,
-    )
-    _lasttext = (x, y, text)
-
-
-def write_line_one(tft, text: bytes) -> None:
-    "Write text to top line"
+def write_line(tft, text: bytes, lineno: int) -> None:
+    "Write text to given line"
     x = tft.CENTER
-    y = (tft.fontSize()[1] * 0) + RAINBOW_HEIGHT
-    tft.text(x, y, text, 0xFFFFFF)
-
-
-def write_line_two(tft, text: bytes) -> None:
-    "Write text to second line"
-    x = tft.CENTER
-    y = (tft.fontSize()[1] * 1) + RAINBOW_HEIGHT
-    tft.text(x, y, text, 0xFFFFFF)
-
-
-def write_line_three(tft, text: bytes) -> None:
-    "Write text to third line"
-    x = tft.CENTER
-    y = (tft.fontSize()[1] * 2) + RAINBOW_HEIGHT
-    tft.text(x, y, text, 0xFFFFFF)
-
-
-def write_line_four(tft, text: bytes) -> None:
-    "Write text to bottom line"
-    x = tft.CENTER
-    y = (tft.fontSize()[1] * 3) + RAINBOW_HEIGHT
-    tft.text(x, y, text, 0xFFFFFF)
+    _fontHeight = tft.fontSize()[1]
+    y = _fontHeight * lineno + RAINBOW_HEIGHT
+    # first, blank out line (colors are inverted)
+    tft.rect(0, y, 300, _fontHeight, tft.BLACK, tft.BLACK)
+    # now, write text (colors are inverted)
+    tft.text(x, y, text, tft.WHITE)
