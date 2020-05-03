@@ -37,10 +37,12 @@ backlight_on = True
 
 
 def handle_button(which, event):
+    global backlight_on
     if which == "left":
         print("Left button")
-        led.backlight(not backlight_on)
-        backlight_on = not backlight_on
+        _new_bl = not backlight_on
+        led.backlight(_new_bl)
+        backlight_on = _new_bl
     else:
         print("Right button")
 
@@ -58,4 +60,3 @@ pinR = machine.Pin(
     handler=lambda e: handle_button("right", e),
     debounce=500,
 )
-
