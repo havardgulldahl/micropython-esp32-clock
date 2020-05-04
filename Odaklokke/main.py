@@ -3,7 +3,7 @@
 print("main.py")
 
 import machine  # pylint: disable=import-error
-import screen, networking, clock
+import screen, networking, clock, riddles
 
 
 def write_time(led) -> None:
