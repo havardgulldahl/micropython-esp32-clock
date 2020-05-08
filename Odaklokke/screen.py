@@ -23,9 +23,10 @@ def setup():
     for i in range(0, 301):
         color = 0xFFFFFF - tft.hsb2rgb(i / 301 * 360, 1, 1)
         tft.line(i, 0, i, RAINBOW_HEIGHT, color)
+        tft.line(i, 240, i, 240 - RAINBOW_HEIGHT, color)
 
     tft.set_fg(0x000000)
-    tft.font("ubuntu.fon")  # ubuntu regular 32pt, with norwegian characters
+    tft.font("ubuntu28.fon")  # ubuntu regular, with norwegian characters
     return tft
 
 

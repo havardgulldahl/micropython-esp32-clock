@@ -5,6 +5,7 @@
 
 import random
 import os # pylint: disable=import-error
+import gc
 
 RIDDLE_FILENAME="riddles.csv"
 
@@ -16,6 +17,7 @@ def get_riddle() -> tuple:
             lines = int(f.rsplit(":")[1])
             riddles = open(f)
             break
+    gc.collect()
     if riddles is None:
         raise Exception("Could not read riddlefile!")
     randomline = random.randint(0, lines) # get a random line number
